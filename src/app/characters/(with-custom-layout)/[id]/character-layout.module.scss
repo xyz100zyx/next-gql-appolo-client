@@ -1,0 +1,30 @@
+.layout {
+  padding-top: 16px;
+  position: relative;
+  overflow: auto;
+  position: relative;
+
+  &-link {
+    display: flex;
+    gap: 8px;
+    position: absolute;
+    top: 0;
+
+    & svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    & span {
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+    }
+  }
+
+  &-children{
+    display: flex;
+    justify-content: center;
+  }
+}

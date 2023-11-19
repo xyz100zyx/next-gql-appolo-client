@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import styles from './layout.module.scss';
-import { Header } from './components';
+import { ApolloWrapper, Header } from './components';
+import { ApolloProvider } from '@apollo/client';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,12 +20,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className={styles.rootLayout}>
-          <Header />
-          <div className={styles.layout}>
-            {children}
+        <ApolloWrapper>
+          <div className={styles.rootLayout}>
+            <Header />
+            <div className={styles.layout}>
+              {children}
+            </div>
           </div>
-        </div>
+        </ApolloWrapper>
       </body>
     </html>
   )

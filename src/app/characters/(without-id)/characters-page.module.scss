@@ -1,0 +1,28 @@
+.page{
+    padding-top: 16px;
+    width: 100%;
+    max-width: 100%;
+
+    & .form{
+        display: flex;
+        gap: 20px;
+        align-items: center;
+
+        &-field{
+            max-width: 240px;
+            width: 100%;
+        }
+    }
+
+    &-cards{
+        list-style: none;
+        display: flex;
+        gap: 24px 20px;
+        flex-wrap: wrap;
+        padding-top: 60px;
+    }
+
+    &-card{
+        max-width: 240px;
+    }
+}

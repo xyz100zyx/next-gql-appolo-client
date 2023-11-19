@@ -1,0 +1,40 @@
+.card {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 4px;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.14),
+    0px 3px 4px 0px rgba(213, 190, 190, 0.12), 0px 1px 5px 0px rgba(0, 0, 0, 0.2);
+
+  &-image {
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+  }
+
+  &-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: 12px 16px;
+  }
+
+  &-name {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 30px; /* 150% */
+    letter-spacing: 0.15px;
+    color: rgba(0, 0, 0, 0.87);
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  &-gender {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 21px; /* 150% */
+    letter-spacing: 0.25px;
+    color: rgba(0, 0, 0, 0.6);
+  }
+}

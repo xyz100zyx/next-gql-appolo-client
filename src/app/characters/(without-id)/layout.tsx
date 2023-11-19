@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { LayoutWithProps } from '../utils/types/routing';
+import { LayoutWithProps } from '../../utils/types/routing';
 import styles from './characters-layout.module.scss';
 import charactersLayoutTextImage from '../../../public/characters-layout-text.jpg';
 
