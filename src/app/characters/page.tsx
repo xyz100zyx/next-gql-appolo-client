@@ -2,25 +2,38 @@
 
 export const dynamic = 'force-dynamic'
 
-import { NetworkStatus, gql, useQuery, useSuspenseQuery } from '@apollo/client';
-import { CharacterCard, TextField } from '../../components';
+import { gql, useSuspenseQuery } from '@apollo/client';
+import { CharacterCard } from '../components';
 import styles from './characters-page.module.scss';
-import { FC, useCallback, useState } from 'react';
-import { SearchIcon } from '../../components/common/search-icon';
-import { ResponseAllCharactersType } from '../../utils';
-import { useRouter } from 'next/navigation';
+import { FC } from 'react';
+import { ResponseAllCharactersType } from '../utils';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { SearchField } from '../components/inputs';
 
 interface IFormFields { name: string, species: string, gender: string, status: string };
-const initialFormValues: IFormFields = {
-  gender: '',
-  name: '',
-  species: '',
-  status: ''
-}
 
-const GET_CHARACTERS = gql`
+
+const CharactersPage: FC = () => {
+
+  const { replace } = useRouter();
+  const pathname = usePathname()
+  const navigate = useRouter()
+  const { get, set, has, size } = useSearchParams();
+  const searchParams = new URLSearchParams();
+
+  if (!has('page') && size === 0) {
+    searchParams.append("page", "1");
+    replace(`${pathname}?page=${searchParams.get("page")}`)
+  }
+
+  const onClickLoadMoreButton = () => {
+    searchParams.set("page", `${+get("page")!+1}`);
+    replace(`${pathname}?page=${searchParams.get("page")}`)
+  }
+
+  const GET_CHARACTERS = gql`
 query {
-  characters(page: 1) {
+  characters(page: ${get("page")}, filter: {name: "${get('name') || ""}"}) {
     info {
       count
     }
@@ -34,15 +47,10 @@ query {
 }
     `
 
-const CharactersPage: FC = () => {
-
-  const navigate = useRouter()
-
-  const [formValues, setFormValues] = useState<{ name: string, species: string, gender: string, status: string }>(initialFormValues);
-  const onNameFieldChange = useCallback((value: string) => setFormValues(prev => ({ ...prev, name: value })), []);
   const { data: charactersResult, networkStatus: isCharactersLoading, error: charactersResponseError } = useSuspenseQuery<ResponseAllCharactersType>(GET_CHARACTERS);
   const onCardClick = (id: string) => () => {
-    navigate.push('/characters/'+id)
+    navigate.push('/characters/' + id);
+    window.scrollTo({top: 0})
   }
 
   return (
@@ -51,7 +59,7 @@ const CharactersPage: FC = () => {
         className={styles['form']}
       >
         <div className={styles['form-input']}>
-          <TextField icon={<SearchIcon />} placeholder='Filter by name...' name={'name'} onChange={onNameFieldChange} value={formValues.name} />
+          <SearchField param='name' />
         </div>
         {/*<div className={styles['form-input']}>
                     <TextField name={'name'} onChange={onNameFieldChange} value={formValues.name} />
@@ -70,6 +78,7 @@ const CharactersPage: FC = () => {
           </li>
         ))}
       </ul>
+      <button onClick={onClickLoadMoreButton} className={styles['page-load']}>Load more</button>
     </div>
   )
 };

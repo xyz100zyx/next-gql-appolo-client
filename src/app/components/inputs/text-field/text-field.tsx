@@ -3,9 +3,9 @@ import { FC, ChangeEvent, memo } from 'react';
 import styles from './text-field.module.scss';
 
 type TextFieldProps = {
-    value: string,
     onChange: (value: string) => void
 } & Partial<{
+    value: string,
     label: string
     name: string
     placeholder: string
